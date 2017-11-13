@@ -40,6 +40,13 @@ namespace HelloWorld
             }
 
             return (b % 2 == 0) ? 1 : 0;
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public static int GetBit(byte b, int bitNumber)
