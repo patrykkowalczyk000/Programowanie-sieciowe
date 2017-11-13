@@ -1,0 +1,5 @@
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\HelloWorld\HelloWorld\bin\Debug\HelloWorld.exe
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\HelloWorld\HelloWorld\bin\Debug\HelloWorld.pdb
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\HelloWorld\HelloWorld\obj\Debug\HelloWorld.csprojResolveAssemblyReference.cache
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\HelloWorld\HelloWorld\obj\Debug\HelloWorld.exe
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\HelloWorld\HelloWorld\obj\Debug\HelloWorld.pdb
