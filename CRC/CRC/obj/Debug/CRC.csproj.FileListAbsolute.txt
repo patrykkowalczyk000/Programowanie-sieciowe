@@ -1,0 +1,5 @@
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\CRC\CRC\bin\Debug\CRC.exe
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\CRC\CRC\bin\Debug\CRC.pdb
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\CRC\CRC\obj\Debug\CRC.csprojResolveAssemblyReference.cache
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\CRC\CRC\obj\Debug\CRC.exe
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\CRC\CRC\obj\Debug\CRC.pdb
