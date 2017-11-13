@@ -1,0 +1,5 @@
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\SumaKontrolna\SumaKontrolna\bin\Debug\SumaKontrolna.exe
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\SumaKontrolna\SumaKontrolna\bin\Debug\SumaKontrolna.pdb
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\SumaKontrolna\SumaKontrolna\obj\Debug\SumaKontrolna.csprojResolveAssemblyReference.cache
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\SumaKontrolna\SumaKontrolna\obj\Debug\SumaKontrolna.exe
+D:\LABORATORIUM\Kowalczyk_Patryk\Programowanie-sieciowe\SumaKontrolna\SumaKontrolna\obj\Debug\SumaKontrolna.pdb
