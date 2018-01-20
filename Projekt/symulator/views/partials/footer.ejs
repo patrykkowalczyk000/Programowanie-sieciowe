@@ -1,0 +1,25 @@
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/assets/js/bootstrap/bootstrap.min.js"></script>
+	<script src="/assets/js/bootstrap-switch.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/canvasjs.min.js"></script>
+
+    <% if (navbarActive == 'new-simulation') { %>
+        <script src="/assets/js/simulation.js"></script>
+    <% } %>
+    <% if (navbarActive == 'new-text-simulation') { %>
+        <script src="/assets/js/text-simulation.js"></script>
+    <% } %>
+    <% if (navbarActive == 'simulations') { %>
+        <script src="/assets/js/simulation-parameters.js"></script>
+    <% } %>
+    <% if (navbarActive == 'share') { %>
+        <script src="/assets/js/share-simulation.js"></script>
+    <% } %>
+    <% if (navbarActive == 'share-text') { %>
+        <script src="/assets/js/share-text-simulation.js"></script>
+    <% } %>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<% include partials/header %>
+<body class="page-simulations">
+    <% include partials/navbar %>
+
+    <div class="container-fluid flex-wrapper">
+        <div class="sidebar">
+            <div class="flex-container">
+                <h4>
+                    <span class="ion-ios-paper-outline"></span>
+                    Symulacje
+
+                    <span class="ion-ios-plus-outline btn-icon pull-right" data-toggle="modal" data-target="#new-simulation"></span>
+                </h4>
+
+                <ul class="list-unstyled simulations-list">
+                    <% simulations.forEach(function(item) { %>
+                        <li<% if(simulation && item._id.toString() == simulation._id.toString()) { %> class="active" <% } %>>
+                            <a href="/simulation/<%= item._id %>">
+                                <%= item.name %>
+                            </a>
+                        </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+        <div class="resizer"></div>
+        <div class="main">
+            <div class="flex-container">
+                <% include partials/message %>
+                <% if(simulation) { %>
+                    <div class="simulation-info">
+                        <div class="header">
+                            <h4 class="pull-left"><%= simulation.name %></h4>
+                            <div class="btn-toolbar pull-right" role="toolbar">
+                                <div class="btn-group" role="group">
+                                    <div class="btn-group">
+                                        <a href="/new-simulation/<%= simulation._id %>" class="btn btn-sm btn-default">
+                                            <span class="ion-ios-play-outline"></span>
+                                            Rozpocznij symulację
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="caret"></i>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a href="/new-simulation/<%= simulation._id %>">z graficznym podglądem wyników</a></li>
+                                            <li><a href="/new-simulation/<%= simulation._id %>/text">z tekstowym podglądem wyników</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <% if(results.length) { %>
+                                    <button data-toggle="modal" data-target="#share-simulation" class="btn btn-sm btn-default">
+                                        <span class="ion-ios-upload"></span>
+                                        Udostępnij podgląd
+                                    </button>
+                                    <% } %>
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-sm btn-default dropdown-toggle btn-icon-only" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="ion-ios-more-outline"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li>
+                                            <a href="#" data-toggle="collapse" data-target="#edit-simulation">
+                                                <span class="ion-ios-compose-outline"></span>
+                                                Edytuj symulację
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/simulation/delete/<%= simulation._id %>">
+                                                <span class="ion-ios-trash-outline"></span>
+                                                Usuń symulację
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/export-simulation/<%= simulation._id %>">
+                                                <span class="ion-ios-cloud-download-outline"></span>
+                                                Export do pliku
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <p><%= simulation.description %></p>
+                    </div>
+
+                    <div class="panel panel-default collapse" id="edit-simulation">
+                        <div class="panel-heading">
+                            <span class="ion-ios-paper-outline"></span>
+                            Informacje o symulacji
+                            <span class="ion-ios-close-outline btn-icon pull-right" data-toggle="collapse" data-target="#edit-simulation"></span>
+                        </div>
+                        <div class="panel-body">
+                            <form action="/simulation/edit" method="post">
+                                <div class="form-group">
+                                    <label for="sim-name">Nazwa symulacji</label>
+                                    <input type="text" class="form-control" name="name" id="sim-name" placeholder="Nazwa symulacji" value="<%= simulation.name %>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sim-description">Opis symulacji</label>
+                                    <textarea id="sim-description" rows="6" name="description" class="form-control"><%= simulation.description %></textarea>
+                                </div>
+
+                                <input type="hidden" name="id" value="<%= simulation._id %>">
+
+                                <button type="submit" class="btn btn-block btn-primary btn-block">Zapisz</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                                <span class="ion-ios-settings"></span>
+                                Parametry symulacji
+
+                            <div class="btn-group pull-right" role="group">
+                                <a href="/export-simulation-parameters/<%= simulation._id %>" class="btn btn-xs btn-default">
+                                    <span class="ion-ios-upload-outline"></span>
+                                    Zapisz do pliku
+                                </a>
+                                <a href="#" id="import-simulation-parameters" class="btn btn-xs btn-default">
+                                    <span class="ion-ios-download-outline"></span>
+                                    Załaduj z pliku
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body" id="params-body">
+                        <form action="/simulation/editParameters" method="post">
+                            <input type="hidden" name="id" value="<%= simulation._id %>">
+                            <fieldset>
+                                <legend data-target="#params-1" data-toggle="collapse">
+                                    Podstawowe
+                                    <span class="collapse-icon pull-right ion-ios-minus-empty"></span>
+                                </legend>
+                                <div class="row collapse in" id="params-1">
+                                    <div class="form-group col-md-2">
+                                        <label for="duration">Czas trwania symulacji</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="duration" name="duration" placeholder="Czas trwania symulacji" value="<% if(simulation.parameters.duration) { %><%= simulation.parameters.duration %><% } %>" />
+                                            <div class="input-group-addon">s</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="step">Krok symulacji</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="step" name="step" placeholder="Krok symulacji" value="<% if(simulation.parameters.step) { %><%= simulation.parameters.step %><% } %>" />
+                                            <div class="input-group-addon">ms</div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="form-group col-md-2">
+                                        <label for="real-time">
+                                            Czas rzeczywisty
+                                        </label>
+                                        <input type="checkbox" id="real-time" value="1" name="realTime" class="on-off" <% if(simulation.parameters.realTime == true) { %>checked="checked" <% } %> />
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="adaptive-step">
+                                            Adaptacja kroku symulacji
+                                        </label>
+                                        <input type="checkbox" id="adaptive-step" value="1" name="adaptive" class="on-off" <% if(simulation.parameters.adaptive == true) { %>checked="checked" <% } %> />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="real-time-delays">
+                                            Uwzględniaj opóźnienia komunikacji
+                                        </label>
+                                        <input type="checkbox" id="real-time-delays" value="1" name="realTimeDelays" class="on-off" <% if(simulation.parameters.realTimeDelays == true) { %>checked="checked" <% } %> />
+                                    </div>-->
+
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-block btn-primary btn-block">Zapisz</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset id="predefined-control">
+                                <legend data-target="#params-2" data-toggle="collapse">
+                                    Sterowanie
+                                    <span class="collapse-icon pull-right ion-ios-minus-empty"></span>
+                                </legend>
+                                <div class="collapse in" id="params-2">
+                                    <p>Poniżej możesz ustawić predefiniowane wartości sterowań.</p>
+
+                                    <div class="form-group">
+                                        <label for="use-defined-trajectory">
+                                            Czy użyć zdefiniowanej poniżej trajektorii sterowania?
+                                        </label>
+                                        <input type="checkbox" id="use-defined-trajectory" value="1" name="usePredefinedControl" class="on-off" <% if(simulation.usePredefinedControl == true) { %>checked="checked" <% } %> />
+                                    </div>
+
+                                    <h4 class="item-title">Położenie prętów paliwowych</h4>
+
+                                    <div class="col-md-12 hidden" id="hks-template">
+                                        <div class="input-group col-md-2 float-left">
+                                            <input type="text" class="form-control time" name="hks[time][]" disabled="disabled" placeholder="Czas końca" />
+                                            <div class="input-group-addon">s</div>
+                                        </div>
+                                        <div class="input-group col-md-2 float-left">
+                                            <input type="text" class="form-control value" name="hks[value][]" disabled="disabled" placeholder="Wartość" />
+                                            <div class="input-group-addon">s</div>
+                                        </div>
+                                        <a class="btn-remove" data-action="remove-item" data-var="hks"><span class="glyphicon glyphicon-remove"></span></a>
+                                    </div>
+
+                                    <div class="row predefined-items predefined-hks-items">
+                                        <% if(simulation.predefinedControl.hks != undefined) {
+                                            for(var i = 0; i < simulation.predefinedControl.hks.length; i++) { %>
+                                        <div class="col-md-12 predefined-hks" id="">
+                                            <div class="input-group col-md-2 float-left">
+                                                <input type="text" class="form-control time" name="hks[time][]" value="<%= simulation.predefinedControl.hks[i].x %>" placeholder="Czas końca">
+                                                <div class="input-group-addon">s</div>
+                                            </div>
+                                            <div class="input-group col-md-2 float-left">
+                                                <input type="text" class="form-control value" name="hks[value][]" value="<%= simulation.predefinedControl.hks[i].y %>" placeholder="Wartość">
+                                                <div class="input-group-addon">s</div>
+                                            </div>
+                                            <a class="btn-remove" data-action="remove-item" data-var="hks"><span class="glyphicon glyphicon-remove"></span></a>
+                                        </div>
+                                        <% } } %>
+                                    </div>
+
+                                    <button class="btn btn-primary" data-action="add-item" data-var="hks">Dodaj nowy punkt</button>
+
+
+                                    <div class="col-md-12">
+                                        <div id="hksChart" style="width: 100%; height: 300px;"></div>
+                                    </div>
+
+                                    <h4 class="item-title">Stężenie kwasu borowego</h4>
+
+                                    <div class="col-md-12 hidden" id="cbor-template">
+                                        <div class="input-group col-md-2 float-left">
+                                            <input type="text" class="form-control time" name="cbor[time][]" disabled="disabled" placeholder="Czas końca" />
+                                            <div class="input-group-addon">s</div>
+                                        </div>
+                                        <div class="input-group col-md-2 float-left">
+                                            <input type="text" class="form-control value" name="cbor[value][]" disabled="disabled" placeholder="Wartość" />
+                                            <div class="input-group-addon">s</div>
+                                        </div>
+                                        <a class="btn-remove" data-action="remove-item" data-var="cbor"><span class="glyphicon glyphicon-remove"></span></a>
+                                    </div>
+
+                                    <div class="row predefined-items predefined-cbor-items">
+                                        <% if(simulation.predefinedControl.cbor != undefined) {
+                                            for(var i = 0; i < simulation.predefinedControl.cbor.length; i++) { %>
+                                        <div class="col-md-12 predefined-cbor" id="">
+                                            <div class="input-group col-md-2 float-left">
+                                                <input type="text" class="form-control time" name="cbor[time][]" value="<%= simulation.predefinedControl.cbor[i].x %>" placeholder="Czas końca">
+                                                <div class="input-group-addon">s</div>
+                                            </div>
+                                            <div class="input-group col-md-2 float-left">
+                                                <input type="text" class="form-control value" name="cbor[value][]" value="<%= simulation.predefinedControl.cbor[i].y %>" placeholder="Wartość">
+                                                <div class="input-group-addon">s</div>
+                                            </div>
+                                            <a class="btn-remove" data-action="remove-item" data-var="cbor"><span class="glyphicon glyphicon-remove"></span></a>
+                                        </div>
+                                        <% } } %>
+                                    </div>
+
+                                    <button class="btn btn-primary" data-action="add-item" data-var="cbor">Dodaj nowy punkt</button>
+
+
+                                    <div class="col-md-12">
+                                        <div id="cborChart" style="width: 100%; height: 300px;"></div>
+                                    </div>
+
+                                    <h4 class="item-title">Temperatura chłodziwa na wejściu do reaktora</h4>
+
+                                    <div class="col-md-12 hidden" id="twe-template">
+                                        <div class="input-group col-md-2 float-left">
+                                            <input type="text" class="form-control time" name="twe[time][]" disabled="disabled" placeholder="Czas końca" />
+                                            <div class="input-group-addon">s</div>
+                                        </div>
+                                        <div class="input-group col-md-2 float-left">
+                                            <input type="text" class="form-control value" name="twe[value][]" disabled="disabled" placeholder="Wartość" />
+                                            <div class="input-group-addon">s</div>
+                                        </div>
+                                        <a class="btn-remove" data-action="remove-item" data-var="twe"><span class="glyphicon glyphicon-remove"></span></a>
+                                    </div>
+
+                                    <div class="row predefined-items predefined-twe-items">
+                                        <% if(simulation.predefinedControl.twe != undefined) {
+                                            for(var i = 0; i < simulation.predefinedControl.twe.length; i++) { %>
+                                        <div class="col-md-12 predefined-twe" id="">
+                                            <div class="input-group col-md-2 float-left">
+                                                <input type="text" class="form-control time" name="twe[time][]" value="<%= simulation.predefinedControl.twe[i].x %>" placeholder="Czas końca">
+                                                <div class="input-group-addon">s</div>
+                                            </div>
+                                            <div class="input-group col-md-2 float-left">
+                                                <input type="text" class="form-control value" name="twe[value][]" value="<%= simulation.predefinedControl.twe[i].y %>" placeholder="Wartość">
+                                                <div class="input-group-addon">s</div>
+                                            </div>
+                                            <a class="btn-remove" data-action="remove-item" data-var="twe"><span class="glyphicon glyphicon-remove"></span></a>
+                                        </div>
+                                        <% } } %>
+                                    </div>
+
+                                    <button class="btn btn-primary" data-action="add-item" data-var="twe">Dodaj nowy punkt</button>
+
+
+                                    <div class="col-md-12">
+                                        <div id="tweChart" style="width: 100%; height: 300px;"></div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-block btn-primary btn-block">Zapisz</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                        </div>
+                    </div>
+                    <% if(results.length) { %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                                <span class="ion-ios-flask-outline"></span>
+                                Wyniki symulacji
+
+                            <div class="btn-group pull-right" role="group">
+                                <a href="/get-all-results/<%= simulation._id %>" class="btn btn-xs btn-default">
+                                    <span class="ion-ios-download"></span>
+                                    Pobierz wszystkie
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body" id="results-body">
+                            <div class="list-group">
+                                <% results.forEach(function(item){ %>
+                                    <div href="#" class="list-group-item">
+                                        <h4 class="list-group-item-heading">
+                                            <strong><%= item %></strong>
+                                        </h4>
+                                        <div class="list-group-item-text btn-group">
+                                            <a href="/get-results/<%= simulation._id %>/<%= item %>" class="btn btn-sm btn-default">
+                                                <span class="ion-ios-download"></span>
+                                                Pobierz
+                                            </a>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                <% } else { %>
+                <div id="simulation-overflow">
+                    <h1>Wybierz symulację, aby ją edytować,<br />lub utwórz nową.</h1>
+                </div>
+                <% } %>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="new-simulation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Utwórz nową symulację</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" riole="tablist" id="modal-tabs">
+                        <li class="active">
+                            <a href="#new-sim-tab" data-toggle="tab" data-form="new-sim-form">Nowa symulacja</a>
+                        </li>
+                        <li>
+                            <a href="#import-sim-tab" data-toggle="tab" data-form="import-sim-form">Importuj z pliku</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="new-sim-tab" class="tab-pane active">
+                            <form action="/simulation/add" method="post" enctype="multipart/form-data" id="new-sim-form">
+                                <div class="form-group">
+                                    <label for="new-sim-name">Nazwa symulacji</label>
+                                    <input type="text" class="form-control" name="name" id="new-sim-name" placeholder="Nazwa symulacji" autofocus required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-sim-description">Opis symulacji</label>
+                                    <textarea id="new-sim-description" rows="6" name="description" class="form-control" placeholder="Opis symulacji" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-sim-params">Parametry symulacji</label>
+                                    <input type="file" class="form-control" name="parameters" id="sim-params">
+                                    <p class="help-block">Jeżeli nie wybierzesz pliku z parametrami możesz ustawić je później.</p>
+                                </div>
+                                <input type="hidden" name="redirect" value="<%= redirectTo %>" />
+                            </form>
+                        </div>
+                        <div id="import-sim-tab" class="tab-pane">
+                            <form action="/simulation/import" method="post" enctype="multipart/form-data" id="import-sim-form">
+                                <div class="form-group">
+                                    <label for="import-sim-params">Importuj dane symulacji z pliku</label>
+                                    <input type="file" class="form-control" name="simulation" id="import-sim-params">
+                                    <p class="help-block">Wybierz plik z danymi symulacji w formacie *.json</p>
+                                </div>
+                                <input type="hidden" name="redirect" value="<%= redirectTo %>" />
+                            </form>
+                        </div>
+                    </div>
+                    <input type="hidden" id="actsimform" value="new-sim-form" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.getElementById('new-sim-form').reset();">Anuluj</button>
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById(document.getElementById('actsimform').value).submit();">Utwórz</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="share-simulation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Udostępnianie symulacji</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Udostępniając link do symulacji, umożliwiasz jedynie jej podgląd w czasie wykonywania.</p>
+                    <p style="padding-top: 10px; font-weight: 400;">
+                        Graficzny podgląd wyników
+                    </p>
+                    <form>
+                        <textarea id="sl" class="share-link" onClick="javascript:this.form.sl.focus();this.form.sl.select();" spellcheck="false"></textarea>
+                    </form>
+                    <p style="padding-top: 20px; font-weight: 400;">
+                        Tekstowy podgląd wyników
+                    </p>
+                    <form>
+                        <textarea id="slt" class="share-link" onClick="javascript:this.form.slt.focus();this.form.slt.select();" spellcheck="false"></textarea>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">Zakmnij okno</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+<form action="/import-simulation-parameters/<%= simulation._id %>" method="post" id="imsimparf" enctype="multipart/form-data" class="hidden">
+    <input type="file" name="parameters" id="import-simulation-parameters-file" onchange="document.getElementById('imsimparf').submit();">
+    <input type="hidden" name="redirect" value="<%= redirectTo %>" />
+    <input type="hidden" name="id" value="<%= simulation._id %>">
+</form>
+<script>
+    document.getElementById("sl").innerHTML = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '') + "/share/<%= simulation._id %>";
+    document.getElementById("slt").innerHTML = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '') + "/share/<%= simulation._id %>/text";
+
+    var predefinedControls = {
+        hks: [
+            <% if(simulation && simulation.predefinedControl.hks != undefined) {
+               for(var i = 0; i < simulation.predefinedControl.hks.length; i++) { %>
+                    {x: <%= simulation.predefinedControl.hks[i].x %>, y: <%= simulation.predefinedControl.hks[i].y %>},
+            <% } } %>
+        ],
+        cbor: [
+            <% if(simulation && simulation.predefinedControl.cbor != undefined) {
+               for(var i = 0; i < simulation.predefinedControl.cbor.length; i++) { %>
+                    {x: <%= simulation.predefinedControl.cbor[i].x %>, y: <%= simulation.predefinedControl.cbor[i].y %>},
+            <% } } %>
+        ],
+        twe: [
+            <% if(simulation && simulation.predefinedControl.twe != undefined) {
+               for(var i = 0; i < simulation.predefinedControl.twe.length; i++) { %>
+                    {x: <%= simulation.predefinedControl.twe[i].x %>, y: <%= simulation.predefinedControl.twe[i].y %>},
+            <% } } %>
+        ]
+    },
+    duration =  "<% if(simulation && simulation.parameters.duration) { %> <%= simulation.parameters.duration %><% } else { %> 0 <% } %>";
+</script>
+<% include partials/footer %>

@@ -1,0 +1,323 @@
+<% include partials/header %>
+<body class="page-new-simulations">
+    <% include partials/navbar %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-left">
+                    <h2><%= simulation.name %></h2>
+                    <p><%= simulation.description %></p>
+                </div>
+                <div class="btn-toolbar pull-right start-panel">
+                    <a href="/simulation/<%= simulation._id %>" class="btn btn-default">Wróć do edycji parametrów <i class="ion-ios-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="ion-ios-settings"></span>
+                        Sterowanie
+                    </div>
+                    <div class="panel-body row">
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Położenie prętów sterujących</div>
+                                <div class="panel-body">
+                                    <div class="input-group">
+                                        <input class="form-control" type="number" value="<% if(simulation.predefinedControl.hks.length) { %><%=simulation.predefinedControl.hks[0].y %><% } %>" data-param="hks"<% if(simulation.usePredefinedControl == true) { %> disabled="disabled"<% } %> />
+                                        <div class="input-group-addon">cm</div>
+                                    </div>
+
+                                    <button data-action="setParam" data-param="hks" class="btn btn-default btn-block margin-top-10">Zmień</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Stężenie kwasu borowego</div>
+                                <div class="panel-body">
+                                    <div class="input-group">
+                                        <input class="form-control" type="number" value="<% if(simulation.predefinedControl.cbor.length) { %><%=simulation.predefinedControl.cbor[0].y %><% } %>" data-param="cbor"<% if(simulation.usePredefinedControl == true) { %> disabled="disabled"<% } %> />
+                                        <div class="input-group-addon">g/kg</div>
+                                    </div>
+
+                                    <button data-action="setParam" data-param="cbor" class="btn btn-default btn-block margin-top-10">Zmień</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Temp. chłodziwa na wej. do reaktora</div>
+                                <div class="panel-body">
+                                    <div class="input-group">
+                                        <input class="form-control" type="number" value="<% if(simulation.predefinedControl.twe.length) { %><%=simulation.predefinedControl.twe[0].y %><% } %>" data-param="twe"<% if(simulation.usePredefinedControl == true) { %> disabled="disabled"<% } %> />
+                                        <div class="input-group-addon">&deg; C</div>
+                                    </div>
+
+                                    <button data-action="setParam" data-param="twe" class="btn btn-default btn-block margin-top-10">Zmień</button>
+                                </div>
+                            </div>
+                        </div>
+                        <% if(simulation.usePredefinedControl == true) { %>
+                        <div class="col-md-12">
+                            <label for="usePredefinedControl">
+                            <input type="checkbox" id="usePredefinedControl" checked="checked" /> Użyj zdefiniowanych wcześniej sterowań</label>
+                        </div>
+                        <% } %>
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                        <div class="col-md-12">
+                            <button id="simStop" class="btn btn-danger btn-block">Zakończ symulację</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="ion-ios-pulse"></span>
+                        Diagnostyka symulatora
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">Max. czas komunikacji</div>
+                                    <div class="panel-body">
+                                        <span id="maxCommunicationTime">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Średni czas komunikacji</div>
+                                    <div class="panel-body">
+                                        <span id="avgCommunicationTime">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">Max. opóźnienie</div>
+                                    <div class="panel-body">
+                                        <span id="maxDelay">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Średnie opóźnienie</div>
+                                    <div class="panel-body">
+                                        <span id="avgDelay">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">Czas komunikacji</div>
+                                    <div class="panel-body">
+                                        <div id="communicationTimeChart" style="height: 170px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">Opóźnienie i krok symulacji</div>
+                                    <div class="panel-body">
+                                        <div id="stepDelaysChart" style="height: 170px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span class="ion-ios-analytics-outline spinning"></span>
+                                <select class="change-param" data-action="change-param" data-box="1">
+                                    <option value="s_tp_k">Temp. elem. paliwowych</option>
+                                    <option value="s_tch_k">Temp. chłodziwa</option>
+                                    <option value="s_ro_k">Reaktywność reaktora</option>
+                                    <option value="s_n_k">Stężenie neutronów</option>
+                                    <option value="s_hks_k">Położenie prętów sterujących</option>
+                                    <option value="s_Q_k">Moc cieplna</option>
+                                    <option value="roxe">Reakt. (ksenon)</option>
+                                    <option value="rosm">Reakt. (samar)</option>
+                                    <option value="ropal">Reakt (wypalanie paliwa)</option>
+                                    <option value="rom">Reakt. (temp. chłodziwa)</option>
+                                    <option value="rohks">Reakt. (pręty sterujące)</option>
+                                    <option value="roep">Reakt. (temp. elem. paliwowych)</option>
+                                    <option value="rob">Reakt. (kwas borowy)</option>
+                                </select>
+                            </div>
+                            <div class="panel-body">
+                                <span id="box-1" class="param-value">
+                                    <span class="value">0</span>
+                                    <span class="unit">m/s</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span class="ion-ios-analytics-outline spinning"></span>
+                                <select class="change-param" data-action="change-param" data-box="2">
+                                    <option value="s_tp_k">Temp. elem. paliwowych</option>
+                                    <option value="s_tch_k">Temp. chłodziwa</option>
+                                    <option value="s_ro_k">Reaktywność reaktora</option>
+                                    <option value="s_n_k">Stężenie neutronów</option>
+                                    <option value="s_hks_k">Położenie prętów sterujących</option>
+                                    <option value="s_Q_k">Moc cieplna</option>
+                                    <option value="roxe">Reakt. (ksenon)</option>
+                                    <option value="rosm">Reakt. (samar)</option>
+                                    <option value="ropal">Reakt (wypalanie paliwa)</option>
+                                    <option value="rom">Reakt. (temp. chłodziwa)</option>
+                                    <option value="rohks">Reakt. (pręty sterujące)</option>
+                                    <option value="roep">Reakt. (temp. elem. paliwowych)</option>
+                                    <option value="rob">Reakt. (kwas borowy)</option>
+                                </select>
+                            </div>
+                            <div class="panel-body">
+                                <span id="box-2" class="param-value">
+                                    <span class="value">0</span>
+                                    <span class="unit">m/s</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span class="ion-ios-analytics-outline spinning"></span>
+                                <select class="change-param" data-action="change-param" data-box="3">
+                                    <option value="s_tp_k">Temp. elem. paliwowych</option>
+                                    <option value="s_tch_k">Temp. chłodziwa</option>
+                                    <option value="s_ro_k">Reaktywność reaktora</option>
+                                    <option value="s_n_k">Stężenie neutronów</option>
+                                    <option value="s_hks_k">Położenie prętów sterujących</option>
+                                    <option value="s_Q_k">Moc cieplna</option>
+                                    <option value="roxe">Reakt. (ksenon)</option>
+                                    <option value="rosm">Reakt. (samar)</option>
+                                    <option value="ropal">Reakt (wypalanie paliwa)</option>
+                                    <option value="rom">Reakt. (temp. chłodziwa)</option>
+                                    <option value="rohks">Reakt. (pręty sterujące)</option>
+                                    <option value="roep">Reakt. (temp. elem. paliwowych)</option>
+                                    <option value="rob">Reakt. (kwas borowy)</option>
+                                </select>
+                            </div>
+                            <div class="panel-body">
+                                <span id="box-3" class="param-value">
+                                    <span class="value">0</span>
+                                    <span class="unit">m/s</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <span class="ion-ios-time-outline"></span>
+                                Czas symulacji
+                            </div>
+                            <div class="panel-body">
+                                <span class="param-value">
+                                    <span id="simTime" class="value">0</span>
+                                    <span class="unit">s</span>
+                                </span><br/>
+                                <!--<span class="param-value">
+                                    <span id="realTime" class="value">0</span>
+                                    <span class="unit">s</span>
+                                </span>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="ion-ios-analytics-outline"></span>
+                        <select class="change-param" id="showParameter">
+                            <option value="s_n_k">Stężenie neutronów</option>
+                            <option value="s_Q_k">Moc cieplna</option>
+                            <option value="s_hks_k">Położenie prętów sterujących</option>
+                            <option value="s_tp_k">Temperatura elementów paliwowych</option>
+                            <option value="s_tch_k">Temperatura chłodziwa</option>
+                            <option value="s_ro_k">Reaktywność reaktora</option>
+                            <option value="roxe">Reaktywność (ksenon)</option>
+                            <option value="rosm">Reaktywność (samar)</option>
+                            <option value="ropal">Reaktywność (wypalanie paliwa)</option>
+                            <option value="rom">Reaktywność (temperatura chłodziwa)</option>
+                            <option value="rohks">Reaktywność (pręty sterujące)</option>
+                            <option value="roep">Reaktywność (temperatura elementów paliwowych)</option>
+                            <option value="rob">Reaktywność (kwas borowy)</option>
+                        </select>
+                    </div>
+                    <div class="panel-body">
+                        <div id="simulationChart" style="height: 400px; width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="new-simulation-overflow">
+        <div class="wrapper">
+            <h1>Trwa uruchamianie symulatora</h1>
+            <i id="simulatorIcon" class="ion-ios-loop-strong spinning"></i>
+            <p id="simulatorStatus">Oczekiwanie na nawiązanie połączenia...</p>
+        </div>
+    </div>
+
+    <script>
+        var d = new Date,
+            y = d.getFullYear(),
+            m = d.getMonth()+1,
+            da = d.getDate(),
+            h = d.getHours(),
+            mi = d.getMinutes(),
+            s = d.getSeconds();
+
+        var simulationParameters = {
+            simulationId: "<%= simulation._id %>",
+            userId: "<%= simulation._creator %>",
+            date: "<%= lastSimulated %>",
+            step: <%= simulation.parameters.step %>,
+            duration: "<%= simulation.parameters.duration %>",
+            usePredefinedControl: <%= simulation.usePredefinedControl %>,
+            predefinedControls: {
+                hks: [
+                    <% if(simulation && simulation.predefinedControl.hks != undefined) {
+                       for(var i = 0; i < simulation.predefinedControl.hks.length; i++) { %>
+                            {x: <%= simulation.predefinedControl.hks[i].x %>, y: <%= simulation.predefinedControl.hks[i].y %>},
+                    <% } } %>
+                ],
+                cbor: [
+                    <% if(simulation && simulation.predefinedControl.cbor != undefined) {
+                       for(var i = 0; i < simulation.predefinedControl.cbor.length; i++) { %>
+                            {x: <%= simulation.predefinedControl.cbor[i].x %>, y: <%= simulation.predefinedControl.cbor[i].y %>},
+                    <% } } %>
+                ],
+                twe: [
+                    <% if(simulation && simulation.predefinedControl.twe != undefined) {
+                       for(var i = 0; i < simulation.predefinedControl.twe.length; i++) { %>
+                            {x: <%= simulation.predefinedControl.twe[i].x %>, y: <%= simulation.predefinedControl.twe[i].y %>},
+                    <% } } %>
+                ]
+            }
+        };
+    </script>
+
+<% include partials/footer %>

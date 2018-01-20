@@ -1,0 +1,59 @@
+// main: ./main.less
+/* ************************************************
+ *                  Navbar                        *
+ * ************************************************/
+#menu.navbar-default .navbar-brand {
+    color: @navbar-brand-color;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+    width: 250px;
+}
+#menu.navbar-default .navbar-brand>span {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0px;
+}
+#menu.navbar-default {
+    font-size: 18px;
+    background-color: @navbar-bg;
+    border-bottom: 4px solid rgba(14,97,81,.8);
+    margin-bottom: 0px;
+}
+#menu.navbar-default .navbar-nav>li>a>span {
+    margin-right: 5px
+}
+#menu.navbar-default .navbar-nav>li>a {
+    color: @navbar-item-color;
+    font-weight: 300;
+    background-color: @navbar-bg;
+    padding: 25px 20px;
+}
+#menu.navbar-default .navbar-nav>li>a:hover,
+#menu.navbar-default .navbar-nav>li>a:focus {
+    color: @navbar-item-hover-color;
+    background-color: @navbar-item-hover-bg;
+}
+#menu.navbar-default .navbar-nav>.active>a,
+#menu.navbar-default .navbar-nav>.active>a:hover,
+#menu.navbar-default .navbar-nav>.active>a:focus {
+    color: @navbar-item-hover-color;
+    background-color: @navbar-item-hover-bg;
+}
+#menu.navbar-default .navbar-toggle {
+    border-color: #1abc9c;
+}
+#menu.navbar-default .navbar-toggle:hover,
+#menu.navbar-default .navbar-toggle:focus {
+    background-color: #1abc9c;
+}
+#menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #1abc9c;
+}
+#menu.navbar-default .navbar-toggle:hover .icon-bar,
+#menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #16a085;
+}

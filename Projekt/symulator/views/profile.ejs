@@ -1,0 +1,68 @@
+<% include partials/header %>
+<body class="page-profile">
+	<% include partials/navbar %>
+
+	<div class="container">
+		<% include partials/message %>
+
+		<div class="col-md-3 col-md-offset-1">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Twój profil
+				</div>
+				<div class="panel-body">
+					<p>
+						<span class="ion-ios-person-outline"></span>
+						<%= firstName %> <%= lastName %>
+					</p>
+					<p>
+						<span class="ion-ios-email-outline"></span>
+						<%= email %>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-7">
+			<div class="panel panel-default" id="profile-data">
+				<div class="panel-heading">
+					Edytuj dane
+				</div>
+				<div class="panel-body">
+					<form action="/profile/save" method="post">
+						<div class="form-group col-md-6">
+                            <label for="firstName">Imię</label>
+                            <input type="text" name="firstName" value="<%= firstName %>" class="form-control" id="firstName" placeholder="Imię">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="lastName">Nazwisko</label>
+                            <input type="text" name="lastName" value="<%= lastName %>" class="form-control" id="lastName" placeholder="Nazwisko">
+                        </div>
+                        <div class="col-md-12">
+                        	<button type="submit" class="btn btn-primary">Zapisz</button>
+                        </div>
+					</form>
+				</div>
+			</div>
+			<div class="panel panel-default" id="profile-password">
+				<div class="panel-heading">
+					Zmień hasło
+				</div>
+				<div class="panel-body">
+					<form action="/profile/changePassword" method="post">
+						<div class="form-group col-md-6">
+                            <label for="oldPassword">Stare hasło</label>
+                            <input type="password" name="oldPassword" class="form-control" id="oldPassword" placeholder="Stare hasło">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="newPassword">Nowe hasło</label>
+                            <input type="password" name="newPassword" class="form-control" id="newPassword" placeholder="Nowe hasło">
+                        </div>
+						<div class="col-md-12">
+                        	<button type="submit" class="btn btn-primary">Zmień hasło</button>
+                        </div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+<% include partials/footer %>

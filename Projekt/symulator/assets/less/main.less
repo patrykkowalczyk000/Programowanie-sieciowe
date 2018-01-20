@@ -1,0 +1,70 @@
+//out: ../css/main.css, compress: true
+@import 'https://fonts.googleapis.com/css?family=Roboto:100,100i,300,400,500,700,900&subset=latin-ext';
+@import '../css/ionicons.min.css';
+@import '../css/bootstrap-switch.min.css';
+
+@import "variables";
+@import "login";
+@import "navbar";
+@import "start";
+@import "simulations";
+@import "profile";
+
+body, html {
+	background-color: #F7F9F9;
+	font-family: Roboto;
+	font-size: 16px;
+	font-weight: 300;
+}
+.margin-top-10 {
+    margin-top: 10px !important;
+}
+.float-left {
+    float: left !important;
+}
+.btn-primary {
+	background-color: @navbar-bg;
+	border-color: darken(@navbar-bg, 3%);
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:active:hover,
+.btn-primary:focus:hover {
+	background-color: @navbar-item-hover-bg;
+	border-color: darken(@navbar-item-hover-bg, 3%);
+}
+.btn>span {
+	margin-right: 5px;
+}
+.dropdown-menu>li>a>span {
+	margin-right: 5px;
+}
+.btn-icon-only>span {
+	margin-right: 0px;
+}
+
+fieldset:first-of-type {
+	margin-top: 0px;
+}
+fieldset {
+	margin-top: 15px;
+	cursor: pointer;
+}
+fieldset>legend {
+	font-size: 16px;
+}
+form label {
+	font-weight: 300;
+    font-size: 14px;
+}
+.btn-icon {
+	cursor: pointer;
+}
+.btn-icon:hover,
+.btn-icon:active,
+.btn-icon:focus,
+.btn-icon:active:hover,
+.btn-icon:focus:hover {
+    color: @navbar-item-hover-bg;
+}

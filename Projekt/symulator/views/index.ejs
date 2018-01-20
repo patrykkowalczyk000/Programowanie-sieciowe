@@ -1,0 +1,45 @@
+<% include partials/header %>
+<body class="page-start">
+    <% include partials/navbar %>
+
+    <div class="container">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default start-panel">
+                <div class="panel-body">
+                    <h4 class="panel-title">
+                    <span class="ion-ios-clock-outline"></span>
+                        Ostatnie symulacje
+                    </h4>
+
+                    <% include partials/message %>
+
+                    <div class="list-group">
+                    	<% simulations.forEach(function(item){ %>
+                    		<div class="list-group-item">
+	                            <h4 class="list-group-item-heading">
+	                                <%= item.name %>
+	                                <span class="date"><%= moment(item.lastSimulated).format('DD.MM.YYYYr. HH:mm:ss') %></span>
+	                            </h4>
+	                            <p><%= item.description %></p>
+	                            <p class="list-group-item-text extra-menu">
+	                                <a href="/get-results/<%= item._id %>/<%= moment(item.lastSimulated).format('DD-MM-YYYY HH-mm-ss') %>" class="btn btn-sm btn-primary">
+	                                    <span class="ion-ios-cloud-download"></span>
+	                                    Pobierz wyniki
+	                                </a>
+	                                <a href="/new-simulation/<%= item._id %>" class="btn btn-sm btn-default">
+	                                    <span class="ion-ios-reload"></span>
+	                                    Symuluj ponownie
+	                                </a>
+	                                <a href="/simulation/<%= item._id %>" class="btn btn-sm btn-default">
+	                                    <span class="ion-ios-compose-outline"></span>
+	                                    Edytuj parametry
+	                                </a>
+	                            </p>
+	                        </div>
+                    	<% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% include partials/footer %>

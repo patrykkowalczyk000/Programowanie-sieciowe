@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>libraries/Extensions.cpp</itemPath>
+      <itemPath>libraries/Extensions.h</itemPath>
+      <itemPath>libraries/Group.cpp</itemPath>
+      <itemPath>libraries/Group.h</itemPath>
+      <itemPath>libraries/HTTPSocket.cpp</itemPath>
+      <itemPath>libraries/HTTPSocket.h</itemPath>
+      <itemPath>libraries/Hub.cpp</itemPath>
+      <itemPath>libraries/Hub.h</itemPath>
+      <itemPath>libraries/Networking.cpp</itemPath>
+      <itemPath>libraries/Networking.h</itemPath>
+      <itemPath>libraries/Node.cpp</itemPath>
+      <itemPath>libraries/Node.h</itemPath>
+      <itemPath>libraries/Socket.cpp</itemPath>
+      <itemPath>libraries/Socket.h</itemPath>
+      <itemPath>libraries/WebSocket.cpp</itemPath>
+      <itemPath>libraries/WebSocket.h</itemPath>
+      <itemPath>libraries/WebSocketImpl.cpp</itemPath>
+      <itemPath>libraries/WebSocketProtocol.h</itemPath>
+      <itemPath>libraries/json.hpp</itemPath>
+      <itemPath>simulation.h</itemPath>
+      <itemPath>simulator.h</itemPath>
+      <itemPath>libraries/uUV.cpp</itemPath>
+      <itemPath>libraries/uUV.h</itemPath>
+      <itemPath>libraries/uWS.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>server.cpp</itemPath>
+      <itemPath>simulation.cpp</itemPath>
+      <itemPath>simulator.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+          <incDir>
+            <pElem>libraries</pElem>
+            <pElem>/usr/include</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>libraries</pElem>
+            <pElem>/usr/lib</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>uWS</linkerLibLibItem>
+            <linkerOptionItem>-lssl</linkerOptionItem>
+            <linkerOptionItem>-lcrypto</linkerOptionItem>
+            <linkerOptionItem>-luv</linkerOptionItem>
+            <linkerLibLibItem>uv</linkerLibLibItem>
+            <linkerLibLibItem>z</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="libraries/Extensions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Extensions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Group.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Group.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/HTTPSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/HTTPSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Hub.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Hub.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Networking.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Networking.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Node.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Node.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Socket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Socket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/WebSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/WebSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/WebSocketImpl.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/WebSocketProtocol.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/json.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/uUV.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/uUV.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/uWS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="server.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="simulation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="simulation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="simulator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="simulator.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <incDir>
+            <pElem>libraries</pElem>
+            <pElem>/usr/include</pElem>
+          </incDir>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/server</output>
+          <linkerAddLib>
+            <pElem>libraries</pElem>
+            <pElem>/usr/lib</pElem>
+          </linkerAddLib>
+          <linkerDynSerch>
+            <pElem>./</pElem>
+          </linkerDynSerch>
+          <linkerLibItems>
+            <linkerOptionItem>-lssl</linkerOptionItem>
+            <linkerOptionItem>-lcrypto</linkerOptionItem>
+            <linkerOptionItem>-luv</linkerOptionItem>
+            <linkerLibLibItem>z</linkerLibLibItem>
+            <linkerLibLibItem>uv</linkerLibLibItem>
+            <linkerLibLibItem>uWS</linkerLibLibItem>
+            <linkerOptionItem>-lboost_system</linkerOptionItem>
+            <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="libraries/Extensions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Extensions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Group.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Group.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/HTTPSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/HTTPSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Hub.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Hub.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Networking.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Networking.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Node.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Node.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Socket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/Socket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/WebSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/WebSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/WebSocketImpl.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/WebSocketProtocol.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/json.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/uUV.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="libraries/uUV.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/uWS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="server.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="simulation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="simulation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="simulator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="simulator.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

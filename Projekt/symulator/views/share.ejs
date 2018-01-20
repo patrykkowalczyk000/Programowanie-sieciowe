@@ -1,0 +1,230 @@
+<% include partials/header %>
+<body class="page-new-simulations page-share">
+    <% include partials/navbar %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h2><%= simulation.name %></h2>
+                <p><%= simulation.description %></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="ion-ios-pulse"></span>
+                        Diagnostyka symulatora
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">Max. czas komunikacji</div>
+                                    <div class="panel-body">
+                                        <span id="maxCommunicationTime">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Średni czas komunikacji</div>
+                                    <div class="panel-body">
+                                        <span id="avgCommunicationTime">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">Max. opóźnienie</div>
+                                    <div class="panel-body">
+                                        <span id="maxDelay">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Średnie opóźnienie</div>
+                                    <div class="panel-body">
+                                        <span id="avgDelay">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">Czas komunikacji</div>
+                                    <div class="panel-body">
+                                        <div id="communicationTimeChart" style="height: 300px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">Opóźnienie i krok symulacji</div>
+                                    <div class="panel-body">
+                                        <div id="stepDelaysChart" style="height: 300px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span class="ion-ios-analytics-outline spinning"></span>
+                                <select class="change-param" data-action="change-param" data-box="1">
+                                    <option value="s_tp_k">Temp. elem. paliwowych</option>
+                                    <option value="s_tch_k">Temp. chłodziwa</option>
+                                    <option value="s_ro_k">Reaktywność reaktora</option>
+                                    <option value="s_n_k">Stężenie neutronów</option>
+                                    <option value="s_hks_k">Położenie prętów sterujących</option>
+                                    <option value="s_Q_k">Moc cieplna</option>
+                                    <option value="roxe">Reakt. (ksenon)</option>
+                                    <option value="rosm">Reakt. (samar)</option>
+                                    <option value="ropal">Reakt (wypalanie paliwa)</option>
+                                    <option value="rom">Reakt. (temp. chłodziwa)</option>
+                                    <option value="rohks">Reakt. (pręty sterujące)</option>
+                                    <option value="roep">Reakt. (temp. elem. paliwowych)</option>
+                                    <option value="rob">Reakt. (kwas borowy)</option>
+                                    <option value="breaks">breaks</option>
+                                </select>
+                            </div>
+                            <div class="panel-body">
+                                <span id="box-1" class="param-value">
+                                    <span class="value">0</span>
+                                    <span class="unit">m/s</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span class="ion-ios-analytics-outline spinning"></span>
+                                <select class="change-param" data-action="change-param" data-box="2">
+                                    <option value="s_tp_k">Temp. elem. paliwowych</option>
+                                    <option value="s_tch_k">Temp. chłodziwa</option>
+                                    <option value="s_ro_k">Reaktywność reaktora</option>
+                                    <option value="s_n_k">Stężenie neutronów</option>
+                                    <option value="s_hks_k">Położenie prętów sterujących</option>
+                                    <option value="s_Q_k">Moc cieplna</option>
+                                    <option value="roxe">Reakt. (ksenon)</option>
+                                    <option value="rosm">Reakt. (samar)</option>
+                                    <option value="ropal">Reakt (wypalanie paliwa)</option>
+                                    <option value="rom">Reakt. (temp. chłodziwa)</option>
+                                    <option value="rohks">Reakt. (pręty sterujące)</option>
+                                    <option value="roep">Reakt. (temp. elem. paliwowych)</option>
+                                    <option value="rob">Reakt. (kwas borowy)</option>
+                                    <option value="breaks">breaks</option>
+                                </select>
+                            </div>
+                            <div class="panel-body">
+                                <span id="box-2" class="param-value">
+                                    <span class="value">0</span>
+                                    <span class="unit">m/s</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span class="ion-ios-analytics-outline spinning"></span>
+                                <select class="change-param" data-action="change-param" data-box="3">
+                                    <option value="s_tp_k">Temp. elem. paliwowych</option>
+                                    <option value="s_tch_k">Temp. chłodziwa</option>
+                                    <option value="s_ro_k">Reaktywność reaktora</option>
+                                    <option value="s_n_k">Stężenie neutronów</option>
+                                    <option value="s_hks_k">Położenie prętów sterujących</option>
+                                    <option value="s_Q_k">Moc cieplna</option>
+                                    <option value="roxe">Reakt. (ksenon)</option>
+                                    <option value="rosm">Reakt. (samar)</option>
+                                    <option value="ropal">Reakt (wypalanie paliwa)</option>
+                                    <option value="rom">Reakt. (temp. chłodziwa)</option>
+                                    <option value="rohks">Reakt. (pręty sterujące)</option>
+                                    <option value="roep">Reakt. (temp. elem. paliwowych)</option>
+                                    <option value="rob">Reakt. (kwas borowy)</option>
+                                    <option value="breaks">breaks</option>
+                                </select>
+                            </div>
+                            <div class="panel-body">
+                                <span id="box-3" class="param-value">
+                                    <span class="value">0</span>
+                                    <span class="unit">m/s</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <span class="ion-ios-time-outline"></span>
+                                Czas symulacji
+                            </div>
+                            <div class="panel-body">
+                                <span class="param-value">
+                                    <span id="simTime" class="value">0</span>
+                                    <span class="unit">s</span>
+                                </span><br/>
+                                <!--<span class="param-value">
+                                    <span id="realTime" class="value">0</span>
+                                    <span class="unit">s</span>
+                                </span>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="ion-ios-analytics-outline"></span>
+                        <select class="change-param" id="showParameter">
+                            <option value="s_tp_k">Temperatura elementów paliwowych</option>
+                            <option value="s_tch_k">Temperatura chłodziwa</option>
+                            <option value="s_ro_k">Reaktywność reaktora</option>
+                            <option value="s_n_k">Stężenie neutronów</option>
+                            <option value="s_hks_k">Położenie prętów sterujących</option>
+                            <option value="s_Q_k">Moc cieplna</option>
+                            <option value="roxe">Reakt. (ksenon)</option>
+                            <option value="rosm">Reakt. (samar)</option>
+                            <option value="ropal">Reakt (wypalanie paliwa)</option>
+                            <option value="rom">Reakt. (temp. chłodziwa)</option>
+                            <option value="rohks">Reakt. (pręty sterujące)</option>
+                            <option value="roep">Reakt. (temp. elem. paliwowych)</option>
+                            <option value="rob">Reakt. (kwas borowy)</option>
+                            <option value="breaks">breaks</option>
+                        </select>
+                    </div>
+                    <div class="panel-body">
+                        <div id="simulationChart" style="height: 400px; width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="new-simulation-overflow">
+        <div class="wrapper">
+            <h1>Trwa nawiązywanie połączenie z symulatorem</h1>
+            <i id="simulatorIcon" class="ion-ios-loop-strong spinning"></i>
+            <p id="simulatorStatus">Oczekiwanie na nawiązanie połączenia...</p>
+        </div>
+    </div>
+
+    <script>
+        var simulationParameters = {
+            simulationId: "<%= simulation._id %>",
+            userId: "guest"
+        };
+    </script>
+
+<% include partials/footer %>

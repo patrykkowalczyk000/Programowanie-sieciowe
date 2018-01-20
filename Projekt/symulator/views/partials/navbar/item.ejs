@@ -1,0 +1,27 @@
+<% if(haveAccess(userGroup, item.userGroup) == true) { %>
+<li<% if(navbarActive && navbarActive == item.slug) { %> class="active" <% } %>>
+    <a href="<%- item.url %>"<% if(item.dropdown) { %> class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"<% } %>>
+        <span class="<%- item.icon %>"></span>
+        <%- item.name %>
+
+        <% if(item.dropdown) { %>
+	        <ul class="dropdown-menu">
+	        	<% item.dropdown.forEach(function(item){ %>
+                    <% if(haveAccess(userGroup, item.userGroup) == true) { %>
+    	        		<% if(item.type == 'separator') { %>
+    	        			<li role="separator" class="divider"></li>
+    	        		<% } else { %>
+    	                <li>
+    		                <a href="<%- item.url %>">
+    		                    <span class="<%- item.icon %>"></span>
+    		                    <%- item.name %>
+    		                </a>
+    		            </li>
+    		            <% } %>
+                    <% } %>
+	            <% }); %>
+	        </ul>
+        <% } %>
+    </a>
+</li>
+<% } %>

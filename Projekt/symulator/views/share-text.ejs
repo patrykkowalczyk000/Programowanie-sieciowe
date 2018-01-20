@@ -1,0 +1,229 @@
+<% include partials/header %>
+<body class="page-new-simulations">
+    <% include partials/navbar %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-left">
+                    <h2><%= simulation.name %></h2>
+                    <p><%= simulation.description %></p>
+                </div>
+                <div class="btn-toolbar pull-right start-panel">
+                    <a href="/simulation/<%= simulation._id %>" class="btn btn-default">Wróć do edycji parametrów <i class="ion-ios-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="ion-ios-pulse"></span>
+                        Diagnostyka symulatora
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Czas komunikacji</div>
+                                    <div class="panel-body">
+                                        <span id="communicationTime">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Średni czas komunikacji</div>
+                                    <div class="panel-body">
+                                        <span id="avgCommunicationTime">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Max. czas komunikacji</div>
+                                    <div class="panel-body">
+                                        <span id="maxCommunicationTime">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">Opóźnienie</div>
+                                    <div class="panel-body">
+                                        <span id="delay">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">Średnie opóźnienie</div>
+                                    <div class="panel-body">
+                                        <span id="avgDelay">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">Max. opóźnienie</div>
+                                    <div class="panel-body">
+                                        <span id="maxDelay">0</span> ms
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">Wyniki symulacji</div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 395px;">Parameter</th>
+                                        <th>Wartość</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Czas symulacji [s]
+                                        </td>
+                                        <td id="param-time">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Krok obliczeń [ms]
+                                        </td>
+                                        <td id="param-14">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Stężenie neutronów [-]
+                                        </td>
+                                        <td id="param-1">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Moc cieplna [W]
+                                        </td>
+                                        <td id="param-2">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Temperatura elementów paliwowych [&deg;C]
+                                        </td>
+                                        <td id="param-3">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Temperatura chłodziwa [&deg;C]
+                                        </td>
+                                        <td id="param-4">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Reaktywność reaktora [-]
+                                        </td>
+                                        <td id="param-5">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Reaktywność (pręty sterujące) [-]
+                                        </td>
+                                        <td id="param-6">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Reaktywność (temperatura chłodziwa) [-]
+                                        </td>
+                                        <td id="param-7">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Reaktywność (temperatura elementów paliwowych) [-]
+                                        </td>
+                                        <td id="param-8">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Reaktywność (kwas borowy) [-]
+                                        </td>
+                                        <td id="param-9">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Reaktywność (ksenon) [-]
+                                        </td>
+                                        <td id="param-10">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Reaktywność (samar) [-]
+                                        </td>
+                                        <td id="param-11">
+                                            0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Reaktywność (wypalanie paliwa) [-]
+                                        </td>
+                                        <td id="param-12">
+                                            0
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="new-simulation-overflow">
+        <div class="wrapper">
+            <h1>Trwa uruchamianie symulatora</h1>
+            <i id="simulatorIcon" class="ion-ios-loop-strong spinning"></i>
+            <p id="simulatorStatus">Oczekiwanie na nawiązanie połączenia...</p>
+        </div>
+    </div>
+
+    <script>
+        var simulationParameters = {
+            simulationId: "<%= simulation._id %>",
+            userId: "guest"
+        };
+    </script>
+
+<% include partials/footer %>
